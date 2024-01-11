@@ -12,12 +12,18 @@ pipeline {
         stage("Build Code") {
             steps {
                 echo "Build started"
-                sh 'mvn clean package -Dmaven.test.skip=true'
+                sh 'mvn clean deploy -Dmaven.test.skip=true'
                 echo "Build completed"
             }
        }
-    } 
-  }
+     stage("Test Stage"){
+            steps{
+                echo "----------- unit test started ----------"
+                sh 'mvn surefire-report:report'
+                echo "----------- unit test Completed ----------"
+            }
+        }
+
 
        /* stage('SonarQube analysis') {
             steps {
@@ -28,6 +34,7 @@ pipeline {
                 }
             }
         }
+        */
 
         stage("Artifact Publish") {
             steps {
@@ -55,4 +62,3 @@ pipeline {
         }
     }
 }
-*/
