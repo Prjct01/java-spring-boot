@@ -16,9 +16,7 @@ pipeline {
                 echo "Build completed"
             }
         }
-    }
-}
-    /*
+
         stage('SonarQube analysis') {
             steps {
                 script {
@@ -55,4 +53,3 @@ pipeline {
         }
     }
 }
-*/
