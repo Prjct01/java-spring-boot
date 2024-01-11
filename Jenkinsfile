@@ -45,7 +45,7 @@ pipeline {
                     def uploadSpec = """{
                         "files": [
                             {
-                                "pattern": "staging/*",
+                                "pattern": "staging/(*)",
                                 "target": "release-local-artifacts/"{1},
                                 "flat": "false",
                                 "props": "${properties}",
