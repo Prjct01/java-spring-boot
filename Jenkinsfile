@@ -42,7 +42,7 @@ pipeline {
                         if (qg.status != 'OK') {
                             error "Pipeline aborted due to quality gate failure: 
 ${qg.status}"
-                        }
+                        } avd
                     }
                 }
             }
@@ -58,7 +58,7 @@ ${qg.status}"
                         "files": [
                             {
                                 "pattern": "staging/(*)",
-                                "target": "release-local-artifacts/{1}",
+                                "target": "release-local-artifacts/{1}",  
                                 "flat": "false",
                                 "props" : "${properties}",
                                 "exclusions": [ "*.sha1", "*.md5"]
