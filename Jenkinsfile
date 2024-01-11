@@ -40,16 +40,16 @@ pipeline {
             steps {
                 script {
                     echo '------------- Artifact Publish Started ------------'
-                    def server = Artifactory.newServer url: "https://avdbbsrr.jfrog.io/artifactory", credentialsId: "jfrog-credential"
-                    def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
+                    def server = Artifactory.newServer url:"https://avdbbsrr.jfrog.io/artifactory", credentialsId:"jfrog-credential"
+                    def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
                     def uploadSpec = """{
-                        "files": [
+                        "files":[
                             {
-                                "pattern": "staging/(*)",
-                                "target": "release-local-artifacts/{1}",
-                                "flat": "false",
-                                "props": "${properties}",
-                                "exclusions": [".sha1", ".md5"]
+                                "pattern":"staging/(*)",
+                                "target":"release-local-artifacts/{1}",
+                                "flat":"false",
+                                "props":"${properties}",
+                                "exclusions":["*.sha1", "*.md5"]
                             }
                         ]
                     }"""
