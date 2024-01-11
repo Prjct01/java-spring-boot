@@ -5,14 +5,14 @@ pipeline {
         }
     }
     environment {
-        PATH = "/opt/maven/bin:$PATH"
+        PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
         scannerHome = tool name: 'sonar-scanner-meportal', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
     }
     stages {
         stage("Build Code") {
             steps {
                 echo "Build started"
-                sh 'mvn clean deploy -Dmaven.test.skip=true'
+                sh 'mvn deploy package -Dmaven.test.skip=true'
                 echo "Build completed"
             }
         }
