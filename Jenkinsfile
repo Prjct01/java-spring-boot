@@ -16,7 +16,7 @@ pipeline {
                 echo "Build completed"
             }
         }
-        /*stage('SonarQube analysis') {
+        stage('SonarQube analysis') {
             steps {
                 script {
                     withSonarQubeEnv('sonar-server-meportal') {
@@ -24,7 +24,7 @@ pipeline {
                     }
                 }
             }
-            */
+            
             stage("Artifact Publish") {
             steps {
                 script {
@@ -52,4 +52,5 @@ pipeline {
         
         }
     }
+}
 }
