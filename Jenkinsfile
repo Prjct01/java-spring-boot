@@ -8,77 +8,68 @@ pipeline {
         PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
     }
     stages {
-        stage("build"){
+        stage("Build") {
             steps {
-                echo "----------- build started ----------"
-                sh 'mvn deploy package -Dmaven.test.skip=true'
-                echo "----------- build complted ----------"
+                echo "----------- Build started ----------"
+                sh 'mvn clean deploy package -Dmaven.test.skip=true'
+                echo "----------- Build completed ----------"
             }
         }
-        stage("test stage"){
-            steps{
-                echo "----------- unit test started ----------"
+        stage("Test") {
+            steps {
+                echo "----------- Unit test started ----------"
                 sh 'mvn surefire-report:report'
-                echo "----------- unit test Completed ----------"
+                echo "----------- Unit test completed ----------"
             }
         }
         /*
-       stage('SonarQube analysis') {
+        stage('SonarQube analysis') {
             environment {
                 scannerHome = tool 'sonar-scanner-meportal'
             }
-            steps{
+            steps {
                 withSonarQubeEnv('sonar-server-meportal') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
         }
 
-        stage("Quality Gate"){
+        stage("Quality Gate") {
             steps {
                 script {
-                    timeout(time: 1, unit: 'HOURS') { 
-                        def qg = waitForQualityGate() 
+                    timeout(time: 1, unit: 'HOURS') {
+                        def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
-                            error "Pipeline aborted due to quality gate failure: 
-${qg.status}"
-                        } 
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
                     }
                 }
             }
         }
         */
-       stage("Artifact Publish") {
+        stage("Artifact Publish") {
             steps {
                 script {
                     echo '------------- Artifact Publish Started ------------'
-                    def server = Artifactory.newServer url:"https://avdbbsrr.jfrog.io//artifactory" ,  credentialsId:"jfrog-cred"
-          def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
+                    def server = Artifactory.newServer url: "https://avdbbsrr.jfrog.io/artifactory", credentialsId: "jfrog-cred"
+                    def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
                     def uploadSpec = """{
                         "files": [
                             {
-                                "pattern": "staging/(*)",
-                                "target": "release-local-artifacts/{1}",  
+                                "pattern": "staging/*",
+                                "target": "release-local-artifacts/",
                                 "flat": "false",
-                                "props" : "${properties}",
-                                "exclusions": [ "*.sha1", "*.md5"]
+                                "props": "${properties}",
+                                "exclusions": ["*.sha1", "*.md5"]
                             }
                         ]
                     }"""
                     def buildInfo = server.upload(uploadSpec)
                     buildInfo.env.collect()
                     server.publishBuildInfo(buildInfo)
-                    echo '------------ Artifact Publish Ended -----------'  
+                    echo '------------ Artifact Publish Ended -----------'
                 }
-            }   
+            }
         }
-
     }
 }
-
-        
-
-
-
-
-
