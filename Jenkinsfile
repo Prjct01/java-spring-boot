@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node {
-            label 'jenkins-slave-node'
+            label 'Jenkins-slave-node'
         }
     }
     environment {
@@ -16,6 +16,8 @@ pipeline {
                 echo "Build completed"
             }
         }
+    }
+}
     /*
         stage('SonarQube analysis') {
             steps {
