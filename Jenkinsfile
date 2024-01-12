@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script {
                     echo '-------------- Docker Build Started -------------'
-                    app = docker.build("avdbbsr.jfrog.io/meportal-docker-local/myapp:1.0")
+                    app = docker.build("avdbbsrr.jfrog.io/meportal-docker-local/myapp:1.0")
                     echo '-------------- Docker Build Ended -------------'
                 }
             }
@@ -75,7 +75,7 @@ pipeline {
             steps {
                 script {
                         echo '---------- Docker Publish Started --------'  
-                        docker.withRegistry("https://avdbbsr.jfrog.io", 'jfrog-credcredential'){
+                        docker.withRegistry("https://avdbbsrr.jfrog.io", 'jfrog-credcredential'){
                         app.push()
                         echo '------------ Docker Publish Ended ---------'  
                     }    
