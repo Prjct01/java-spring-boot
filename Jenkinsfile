@@ -16,6 +16,8 @@ pipeline {
                 echo "Build completed"
             }
        }
+    }
+}
      /*stage("Test Stage"){
             steps{
                 echo "----------- unit test started ----------"
