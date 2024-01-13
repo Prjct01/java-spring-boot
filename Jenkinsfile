@@ -86,14 +86,16 @@ pipeline {
         stage (" Docker Publish "){
             steps {
                 script {
-                        echo '---------- Docker Publish Started --------'  
+                        echo '----------- Docker Publish Started --------'  
                         docker.withRegistry("https://avdbbsrr.jfrog.io", 'jfrog-cred'){
                         app.push()
                         echo '------------ Docker Publish Ended ---------'  
                     }
                 }
            }  
-       }        stage ("Deploy Stage"){
+       }       
+       
+        stage ("Deploy Stage"){
             steps {
                 script {
                         sh './deploy.sh'
