@@ -69,7 +69,7 @@ pipeline {
                     def buildInfo = server.upload(uploadSpec)
                     buildInfo.env.collect()
                     server.publishBuildInfo(buildInfo)
-                    echo '------------ Artifact Publish Ended ------------'  
+                    echo '------------ Artifact Publish Ended -------------'  
                 }
             }   
         }
@@ -93,7 +93,7 @@ pipeline {
                     }
                 }
            }  
-       }       
+        }       
        
         stage ("Deploy Stage"){
             steps {
@@ -103,7 +103,6 @@ pipeline {
                 }
             }
         }
-
     }
 
     
